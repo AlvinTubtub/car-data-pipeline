@@ -2,67 +2,65 @@
 
 [![Python Tests](https://github.com/AlvinTubtub/car-data-pipeline/actions/workflows/python-tests.yml/badge.svg)](https://github.com/AlvinTubtub/car-data-pipeline/actions/workflows/python-tests.yml)
 
-A high-performance Python ETL (Extract, Transform, Load) pipeline for generating, cleaning, validating, and visualizing used car listing datasets. This project demonstrates an end-to-end data engineering workflow by transforming raw vehicle listings into clean, analysis-ready datasets with an interactive Streamlit dashboard.
+A Python-based ETL (Extract, Transform, Load) pipeline that cleans, validates, standardizes, and aggregates used car listing data. The project also includes automated unit tests and a Streamlit dashboard for visualizing the processed data.
 
 ---
 
-## 📌 Features
+## Features
 
-- 🚗 Generate realistic used car listing datasets
-- 🧹 Clean and validate messy automotive data
-- 📊 Configurable data quality threshold
-- ⚙️ Automated ETL pipeline
-- 📈 Interactive Streamlit dashboard
-- 🔍 Search and filter by brand, model, and price tier
-- 💰 Price efficiency analysis (₱ per km)
-- 🏷️ Brand and model performance analytics
-- 📥 Export filtered datasets as CSV
-- ✅ Unit testing with Pytest
+* Cleans inconsistent car listing data
+* Normalizes prices (including USD to PHP conversion)
+* Standardizes mileage values
+* Generates canonical vehicle fingerprints
+* Detects and removes anomalous records
+* Aggregates duplicate listings
+* Unit tested with Pytest
+* Interactive dashboard using Streamlit
+* Automated testing with GitHub Actions
 
 ---
 
-# 📂 Project Structure
+# Project Structure
 
 ```text
-car-data-pipeline/
+car-data-pipeline
 │
-├── assets/
-│   └── dashboard-preview.png
+├── .github
+│   └── workflows
+│       └── python-tests.yml
 │
-├── dashboard/
+├── dashboard
 │   └── app.py
 │
-├── src/
+├── src
+│   ├── __init__.py
 │   └── pipeline.py
 │
-├── tests/
+├── tests
+│   └── test_pipeline.py
 │
 ├── generate_data.py
-├── requirements.txt
-├── README.md
-├── LICENSE
-│
 ├── dirty_car_listings.csv
 ├── clean_car_listings.csv
-├── dirty_catalogue.csv
-└── clean_catalogue.csv
+├── requirements.txt
+├── pytest.ini
+├── pyproject.toml
+├── .gitignore
+├── README.md
+└── LICENSE
 ```
 
 ---
 
-# 🛠 Technologies Used
+# Requirements
 
-- Python 3
-- Pandas
-- NumPy
-- Streamlit
-- Pytest
+* Python 3.10 or newer
+* Git
+* Visual Studio Code (recommended)
 
 ---
 
-# 🚀 Getting Started
-
-## 1. Clone the Repository
+# Clone the Repository
 
 ```bash
 git clone https://github.com/AlvinTubtub/car-data-pipeline.git
@@ -71,21 +69,58 @@ cd car-data-pipeline
 
 ---
 
-## 2. Create a Virtual Environment
+# Windows Setup
 
-```bash
+## 1. Create a Virtual Environment
+
+```powershell
 python -m venv .venv
 ```
 
-Activate the virtual environment (Windows):
+## 2. Activate the Virtual Environment
 
-```bash
+**Command Prompt**
+
+```cmd
 .venv\Scripts\activate
+```
+
+**PowerShell**
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+## 3. Install Dependencies
+
+```powershell
+pip install --upgrade pip
+pip install -r requirements.txt
 ```
 
 ---
 
-## 3. Install Dependencies
+# macOS Setup
+
+## 1. Create a Virtual Environment
+
+```bash
+python3 -m venv .venv
+```
+
+## 2. Activate the Virtual Environment
+
+```bash
+source .venv/bin/activate
+```
+
+## 3. Upgrade pip
+
+```bash
+pip install --upgrade pip
+```
+
+## 4. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -93,45 +128,86 @@ pip install -r requirements.txt
 
 ---
 
-## 4. Generate Sample Data
+# Generate Sample Data
 
-```bash
+Generate a fresh sample dataset.
+
+**Windows**
+
+```powershell
 python generate_data.py
 ```
 
-This creates the sample dirty datasets used by the pipeline.
-
----
-
-## 5. Run the Data Pipeline
+**macOS**
 
 ```bash
-python src\pipeline.py -i dirty_car_listings.csv -o clean_car_listings.csv -r 58.0
-```
-
-### Command Parameters
-
-| Parameter | Description |
-|-----------|-------------|
-| `-i` | Input dirty CSV file |
-| `-o` | Output cleaned CSV file |
-| `-r` | Minimum quality score required |
-
-Example:
-
-```bash
-python src\pipeline.py -i dirty_car_listings.csv -o clean_car_listings.csv -r 58.0
+python3 generate_data.py
 ```
 
 ---
 
-## 6. Launch the Dashboard
+# Run the ETL Pipeline
 
-```bash
-streamlit run dashboard\app.py
+The pipeline reads the raw dataset, cleans the data, removes anomalies, and creates the final aggregated output.
+
+## Windows
+
+```powershell
+python src/pipeline.py ^
+-i dirty_car_listings.csv ^
+-o clean_car_listings.csv ^
+-r 58.0
 ```
 
-Open your browser and visit:
+or
+
+```powershell
+python src/pipeline.py -i dirty_car_listings.csv -o clean_car_listings.csv -r 58.0
+```
+
+## macOS / Linux
+
+```bash
+python3 src/pipeline.py \
+-i dirty_car_listings.csv \
+-o clean_car_listings.csv \
+-r 58.0
+```
+
+or
+
+```bash
+python3 src/pipeline.py -i dirty_car_listings.csv -o clean_car_listings.csv -r 58.0
+```
+
+If the pipeline succeeds, you should see output similar to:
+
+```text
+Starting pipeline...
+Scanning source...
+Success.
+Output written to clean_car_listings.csv
+```
+
+---
+
+# Run the Dashboard
+
+Start the Streamlit dashboard.
+
+## Windows
+
+```powershell
+streamlit run dashboard/app.py
+```
+
+## macOS
+
+```bash
+streamlit run dashboard/app.py
+```
+
+Open your browser:
 
 ```
 http://localhost:8501
@@ -139,116 +215,203 @@ http://localhost:8501
 
 ---
 
-# 🔄 Project Workflow
+# Run the Unit Tests
 
-```text
-Generate Sample Data
-        │
-        ▼
-Dirty Car Listings
-        │
-        ▼
-Python ETL Pipeline
-        │
-        ├── Data Validation
-        ├── Missing Value Handling
-        ├── Duplicate Removal
-        ├── Data Cleaning
-        ├── Quality Scoring
-        └── Data Transformation
-        │
-        ▼
-Clean Car Listings
-        │
-        ▼
-Interactive Streamlit Dashboard
-        │
-        ▼
-Data Exploration & CSV Export
-```
+The project uses **Pytest**.
 
----
-
-# 📊 Dashboard Preview
-
-The Streamlit dashboard provides interactive insights into the cleaned used car listings dataset.
-
-### Dashboard Features
-
-- 📌 Summary KPIs
-- 🚗 Top vehicle models by listing count
-- 💰 Price vs. mileage analysis
-- 🏷️ Brand performance breakdown
-- 📈 Price efficiency analysis (₱/km)
-- 💎 Price tier distribution
-- ⭐ Best value vehicle recommendations
-- 📋 Interactive cleaned listings table
-- 📥 Download filtered data as CSV
-
-<p align="center">
-  <img src="assets/dashboard-preview.png" width="100%" alt="Car Data Pipeline Dashboard">
-</p>
-
----
-
-# 📁 Sample Files
-
-| File | Description |
-|------|-------------|
-| dirty_car_listings.csv | Raw used car listing dataset |
-| clean_car_listings.csv | Cleaned used car listings |
-| dirty_catalogue.csv | Raw vehicle catalogue |
-| clean_catalogue.csv | Cleaned vehicle catalogue |
-
----
-
-# 🧪 Running Tests
-
-Run all unit tests:
+Simply run:
 
 ```bash
 pytest
 ```
 
-or
+Expected output:
 
-```bash
-pytest tests
+```text
+=========================
+6 passed
+=========================
 ```
 
 ---
 
-# 📈 Dashboard Analytics
+# GitHub Actions
 
-The dashboard provides interactive analytics including:
+Every push or pull request automatically executes the unit tests.
 
-- Total Listings
-- Unique Models
-- Average Price
-- Average Mileage
-- Price per Kilometer
-- Brand Distribution
-- Model Distribution
-- Price Tier Analysis
-- Price vs Mileage Scatter Plot
-- Best Value Vehicle Ranking
-- Downloadable Filtered Dataset
+Workflow location:
 
----
+```text
+.github/workflows/python-tests.yml
+```
 
-# 📌 Future Improvements
+GitHub will display:
 
-- Docker support
-- Database integration
-- Cloud deployment
-- REST API
-- Scheduled ETL jobs
-- Machine Learning price prediction
-- Real-time vehicle listing ingestion
+* ✅ Passing
+* ❌ Failed
+
+inside the **Actions** tab.
 
 ---
 
-# 👨‍💻 Author
+# Installing New Packages
+
+Whenever you install a new package, update the requirements file.
+
+```bash
+pip freeze > requirements.txt
+```
+
+Commit the updated file.
+
+---
+
+# Updating the Repository
+
+## Windows
+
+```powershell
+git pull
+```
+
+## macOS
+
+```bash
+git pull
+```
+
+---
+
+# Common Commands
+
+Activate virtual environment
+
+Windows
+
+```powershell
+.venv\Scripts\activate
+```
+
+macOS
+
+```bash
+source .venv/bin/activate
+```
+
+Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+Run tests
+
+```bash
+pytest
+```
+
+Run pipeline
+
+```bash
+python src/pipeline.py -i dirty_car_listings.csv -o clean_car_listings.csv -r 58.0
+```
+
+Run dashboard
+
+```bash
+streamlit run dashboard/app.py
+```
+
+Deactivate virtual environment
+
+```bash
+deactivate
+```
+
+---
+
+# Troubleshooting
+
+## ModuleNotFoundError
+
+If you receive
+
+```text
+ModuleNotFoundError
+```
+
+ensure that:
+
+* the virtual environment is activated
+* dependencies are installed
+* `pytest.ini` exists in the project root
+* `src/__init__.py` exists
+
+---
+
+## File Not Found
+
+Verify that the input file exists.
+
+```bash
+ls *.csv
+```
+
+or on Windows
+
+```powershell
+dir *.csv
+```
+
+---
+
+## Streamlit Not Found
+
+Install dependencies again.
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Verify Installation
+
+```bash
+pytest
+```
+
+Expected:
+
+```text
+=========================
+6 passed
+=========================
+```
+
+Then run:
+
+```bash
+python src/pipeline.py -i dirty_car_listings.csv -o clean_car_listings.csv -r 58.0
+```
+
+Finally:
+
+```bash
+streamlit run dashboard/app.py
+```
+
+Open:
+
+```
+http://localhost:8501
+```
+
+If all three commands work successfully, the project has been installed correctly.
+
+---
+
+# Author
 
 **Alvin Tubtub**
 
@@ -256,12 +419,6 @@ GitHub: https://github.com/AlvinTubtub
 
 ---
 
-# 📄 License
+# License
 
 This project is licensed under the MIT License.
-
----
-
-## ⭐ Support
-
-If you found this project useful, consider giving it a **Star ⭐** on GitHub.
