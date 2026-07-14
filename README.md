@@ -1,38 +1,39 @@
 # 🚗 Car Data Pipeline
 
-A high-performance Python data pipeline for generating, cleaning, validating, and processing automotive datasets. This project demonstrates an end-to-end ETL (Extract, Transform, Load) workflow using realistic car listing and catalogue data.
+A high-performance Python ETL (Extract, Transform, Load) pipeline for generating, cleaning, validating, and visualizing used car listing datasets. This project demonstrates an end-to-end data engineering workflow by transforming raw vehicle listings into clean, analysis-ready datasets with an interactive Streamlit dashboard.
 
 ---
 
 ## 📌 Features
 
-- Generate realistic car listing datasets
-- Clean and validate messy automotive data
-- Data quality checks and preprocessing
-- Automated ETL pipeline
-- Unit testing with pytest
-- Dashboard support for data visualization
-- Easy to extend for larger datasets
+- 🚗 Generate realistic used car listing datasets
+- 🧹 Clean and validate messy automotive data
+- 📊 Configurable data quality threshold
+- ⚙️ Automated ETL pipeline
+- 📈 Interactive Streamlit dashboard
+- 🔍 Search and filter by brand, model, and price tier
+- 💰 Price efficiency analysis (₱ per km)
+- 🏷️ Brand and model performance analytics
+- 📥 Export filtered datasets as CSV
+- ✅ Unit testing with Pytest
 
 ---
 
-## 📂 Project Structure
+# 📂 Project Structure
 
-```
+```text
 car-data-pipeline/
 │
 ├── assets/
-│   └── Images and project assets
+│   └── dashboard-preview.png
 │
 ├── dashboard/
-│   └── Dashboard application
+│   └── app.py
 │
 ├── src/
-│   ├── pipeline.py
-│   └── Processing modules
+│   └── pipeline.py
 │
 ├── tests/
-│   └── Unit tests
 │
 ├── generate_data.py
 ├── requirements.txt
@@ -47,31 +48,42 @@ car-data-pipeline/
 
 ---
 
-## ⚙️ Technologies Used
+# 🛠 Technologies Used
 
-- Python 3.11+
+- Python 3
 - Pandas
 - NumPy
+- Streamlit
 - Pytest
-- Streamlit (Dashboard)
 
 ---
 
-## 📦 Installation
+# 🚀 Getting Started
 
-Clone the repository
+## 1. Clone the Repository
 
 ```bash
 git clone https://github.com/AlvinTubtub/car-data-pipeline.git
-```
-
-Go to the project
-
-```bash
 cd car-data-pipeline
 ```
 
-Install dependencies
+---
+
+## 2. Create a Virtual Environment
+
+```bash
+python -m venv .venv
+```
+
+Activate the virtual environment (Windows):
+
+```bash
+.venv\Scripts\activate
+```
+
+---
+
+## 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -79,39 +91,118 @@ pip install -r requirements.txt
 
 ---
 
-## 🚀 Generate Sample Data
+## 4. Generate Sample Data
 
 ```bash
 python generate_data.py
 ```
 
-This generates realistic automotive datasets including:
-
-- Car Listings
-- Vehicle Catalogue
-- Clean datasets
-- Dirty datasets for testing
+This creates the sample dirty datasets used by the pipeline.
 
 ---
 
-## ▶️ Run the Data Pipeline
+## 5. Run the Data Pipeline
 
 ```bash
-python src/pipeline.py
+python src\pipeline.py -i dirty_car_listings.csv -o clean_car_listings.csv -r 58.0
 ```
 
-The pipeline performs:
+### Command Parameters
 
-- Data loading
-- Data validation
-- Missing value handling
-- Duplicate removal
-- Data transformation
-- Clean dataset generation
+| Parameter | Description |
+|-----------|-------------|
+| `-i` | Input dirty CSV file |
+| `-o` | Output cleaned CSV file |
+| `-r` | Minimum quality score required |
+
+Example:
+
+```bash
+python src\pipeline.py -i dirty_car_listings.csv -o clean_car_listings.csv -r 58.0
+```
 
 ---
 
-## 🧪 Run Unit Tests
+## 6. Launch the Dashboard
+
+```bash
+streamlit run dashboard\app.py
+```
+
+Open your browser and visit:
+
+```
+http://localhost:8501
+```
+
+---
+
+# 🔄 Project Workflow
+
+```text
+Generate Sample Data
+        │
+        ▼
+Dirty Car Listings
+        │
+        ▼
+Python ETL Pipeline
+        │
+        ├── Data Validation
+        ├── Missing Value Handling
+        ├── Duplicate Removal
+        ├── Data Cleaning
+        ├── Quality Scoring
+        └── Data Transformation
+        │
+        ▼
+Clean Car Listings
+        │
+        ▼
+Interactive Streamlit Dashboard
+        │
+        ▼
+Data Exploration & CSV Export
+```
+
+---
+
+# 📊 Dashboard Preview
+
+The Streamlit dashboard provides interactive insights into the cleaned used car listings dataset.
+
+### Dashboard Features
+
+- 📌 Summary KPIs
+- 🚗 Top vehicle models by listing count
+- 💰 Price vs. mileage analysis
+- 🏷️ Brand performance breakdown
+- 📈 Price efficiency analysis (₱/km)
+- 💎 Price tier distribution
+- ⭐ Best value vehicle recommendations
+- 📋 Interactive cleaned listings table
+- 📥 Download filtered data as CSV
+
+<p align="center">
+  <img src="assets/dashboard-preview.png" width="100%" alt="Car Data Pipeline Dashboard">
+</p>
+
+---
+
+# 📁 Sample Files
+
+| File | Description |
+|------|-------------|
+| dirty_car_listings.csv | Raw used car listing dataset |
+| clean_car_listings.csv | Cleaned used car listings |
+| dirty_catalogue.csv | Raw vehicle catalogue |
+| clean_catalogue.csv | Cleaned vehicle catalogue |
+
+---
+
+# 🧪 Running Tests
+
+Run all unit tests:
 
 ```bash
 pytest
@@ -120,85 +211,55 @@ pytest
 or
 
 ```bash
-pytest tests/
+pytest tests
 ```
 
 ---
 
-## 📊 Dashboard
+# 📈 Dashboard Analytics
 
-If Streamlit is installed:
+The dashboard provides interactive analytics including:
 
-```bash
-streamlit run dashboard/app.py
-```
-
-The dashboard provides:
-
-- Dataset preview
-- Summary statistics
-- Data quality metrics
-- Interactive visualizations
-
----
-
-## 📁 Sample Files
-
-| File | Description |
-|-------|-------------|
-| dirty_car_listings.csv | Raw car listing dataset |
-| clean_car_listings.csv | Cleaned car listing dataset |
-| dirty_catalogue.csv | Raw vehicle catalogue |
-| clean_catalogue.csv | Cleaned vehicle catalogue |
+- Total Listings
+- Unique Models
+- Average Price
+- Average Mileage
+- Price per Kilometer
+- Brand Distribution
+- Model Distribution
+- Price Tier Analysis
+- Price vs Mileage Scatter Plot
+- Best Value Vehicle Ranking
+- Downloadable Filtered Dataset
 
 ---
 
-## 📈 Pipeline Workflow
+# 📌 Future Improvements
 
-```
-Generate Data
-      │
-      ▼
-Raw CSV Files
-      │
-      ▼
-Validation
-      │
-      ▼
-Cleaning
-      │
-      ▼
-Transformation
-      │
-      ▼
-Clean Dataset
-      │
-      ▼
-Dashboard / Analysis
-```
-
----
-
-## 📖 Future Improvements
-
-- Support larger datasets
+- Docker support
 - Database integration
-- Automated scheduling
-- Machine learning integration
-- Docker deployment
-- Cloud storage support
+- Cloud deployment
+- REST API
+- Scheduled ETL jobs
+- Machine Learning price prediction
+- Real-time vehicle listing ingestion
 
 ---
 
-## 👤 Author
+# 👨‍💻 Author
 
 **Alvin Tubtub**
 
-GitHub:
-https://github.com/AlvinTubtub
+GitHub: https://github.com/AlvinTubtub
 
 ---
 
-## 📄 License
+# 📄 License
 
 This project is licensed under the MIT License.
+
+---
+
+## ⭐ Support
+
+If you found this project useful, consider giving it a **Star ⭐** on GitHub.
