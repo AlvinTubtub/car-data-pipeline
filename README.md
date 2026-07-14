@@ -1,83 +1,204 @@
-# ⚡ High-Performance ETL Pipeline (9000x Speedup)
+# 🚗 Car Data Pipeline
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
-![Polars](https://img.shields.io/badge/Polars-Rust%20Engine-orange)
-![Status](https://img.shields.io/badge/Maintained-Yes-green)
-![License](https://img.shields.io/badge/License-MIT-lightgrey)
-
-> **Business Context:** Modernization of a legacy data cleaning pipeline.
-> **Result:** Processing time reduced from **45 minutes** to **< 300 milliseconds**.
+A high-performance Python data pipeline for generating, cleaning, validating, and processing automotive datasets. This project demonstrates an end-to-end ETL (Extract, Transform, Load) workflow using realistic car listing and catalogue data.
 
 ---
 
-## 📉 The Challenge
+## 📌 Features
 
-A fictional client in the e-commerce sector faced a critical bottleneck: their daily competitor price analysis script (based on standard Python/Pandas loops) took nearly **45 minutes** to process 500,000 rows of dirty data. This delay impacted their dynamic pricing strategy every morning.
-
-**Key Issues:**
-* **Slow execution:** $O(N^2)$ complexity on product matching.
-* **Dirty Data:** Inconsistent product names (typos, case sensitivity), mixed currencies ($/€), and scaling errors.
-* **Memory usage:** The legacy script crashed on larger datasets.
-
-## 🚀 The Solution
-
-I engineered a high-performance ETL pipeline using **Polars**, a Rust-based DataFrame library, to leverage modern CPU architecture (SIMD & Parallelization).
-
-### Technical Highlights:
-* **Lazy Evaluation:** The pipeline builds a query plan and executes it only when needed, optimizing memory allocation (Streaming API).
-* **Vectorized String Operations:** Replaced Python loops with native Rust string manipulation for regex and cleaning.
-* **Smart Aggregation (Fingerprinting):** Implemented a normalization logic to group products despite typos and formatting errors without complex ML overhead.
-
-## 📊 Performance Benchmark
-
-Processing **500,000 rows** of complex dirty data on a standard machine:
-
-| Metric | Legacy Approach | **My Solution** | Improvement |
-| :--- | :--- | :--- | :--- |
-| **Execution Time** | ~45 min | **273 ms** | **~9,900x Faster** |
-| **Memory Footprint** | High (Load all) | **Low (Streaming)** | Optimized |
-
-![Benchmark Screenshot](./assets/benchmark_result.png)
-*(Measured using Hyperfine)*
+- Generate realistic car listing datasets
+- Clean and validate messy automotive data
+- Data quality checks and preprocessing
+- Automated ETL pipeline
+- Unit testing with pytest
+- Dashboard support for data visualization
+- Easy to extend for larger datasets
 
 ---
 
-## 🛠️ Code Architecture
+## 📂 Project Structure
 
-This project follows professional software engineering practices:
-
-```text
-high-perf-data-pipeline/
+```
+car-data-pipeline/
+│
+├── assets/
+│   └── Images and project assets
+│
+├── dashboard/
+│   └── Dashboard application
+│
 ├── src/
-│   ├── pipeline.py       # Core ETL logic (Pure functions)
+│   ├── pipeline.py
+│   └── Processing modules
+│
 ├── tests/
-│   ├── test_pipeline.py  # Unit tests (Pytest) covering edge cases
-├── generate_data.py      # Script to generate dirty datasets for stress testing
-└── requirements.txt      # Minimal dependencies
+│   └── Unit tests
+│
+├── generate_data.py
+├── requirements.txt
+├── README.md
+├── LICENSE
+│
+├── dirty_car_listings.csv
+├── clean_car_listings.csv
+├── dirty_catalogue.csv
+└── clean_catalogue.csv
 ```
 
-## 💻 How to Run
+---
 
-**1. Install dependencies**
+## ⚙️ Technologies Used
+
+- Python 3.11+
+- Pandas
+- NumPy
+- Pytest
+- Streamlit (Dashboard)
+
+---
+
+## 📦 Installation
+
+Clone the repository
+
+```bash
+git clone https://github.com/AlvinTubtub/car-data-pipeline.git
+```
+
+Go to the project
+
+```bash
+cd car-data-pipeline
+```
+
+Install dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
-**2. Generate the dummy dataset (500k rows)**
+
+---
+
+## 🚀 Generate Sample Data
+
 ```bash
 python generate_data.py
 ```
-**Run the Pipeline**
+
+This generates realistic automotive datasets including:
+
+- Car Listings
+- Vehicle Catalogue
+- Clean datasets
+- Dirty datasets for testing
+
+---
+
+## ▶️ Run the Data Pipeline
+
 ```bash
-# Usage: python src/pipeline.py -i [INPUT] -o [OUTPUT]
-python src/pipeline.py -i dirty_catalogue.csv -o clean_catalogue.csv
+python src/pipeline.py
 ```
+
+The pipeline performs:
+
+- Data loading
+- Data validation
+- Missing value handling
+- Duplicate removal
+- Data transformation
+- Clean dataset generation
+
+---
+
+## 🧪 Run Unit Tests
+
+```bash
+pytest
+```
+
+or
+
+```bash
+pytest tests/
+```
+
+---
+
+## 📊 Dashboard
+
+If Streamlit is installed:
+
+```bash
+streamlit run dashboard/app.py
+```
+
+The dashboard provides:
+
+- Dataset preview
+- Summary statistics
+- Data quality metrics
+- Interactive visualizations
+
+---
+
+## 📁 Sample Files
+
+| File | Description |
+|-------|-------------|
+| dirty_car_listings.csv | Raw car listing dataset |
+| clean_car_listings.csv | Cleaned car listing dataset |
+| dirty_catalogue.csv | Raw vehicle catalogue |
+| clean_catalogue.csv | Cleaned vehicle catalogue |
+
+---
+
+## 📈 Pipeline Workflow
+
+```
+Generate Data
+      │
+      ▼
+Raw CSV Files
+      │
+      ▼
+Validation
+      │
+      ▼
+Cleaning
+      │
+      ▼
+Transformation
+      │
+      ▼
+Clean Dataset
+      │
+      ▼
+Dashboard / Analysis
+```
+
+---
+
+## 📖 Future Improvements
+
+- Support larger datasets
+- Database integration
+- Automated scheduling
+- Machine learning integration
+- Docker deployment
+- Cloud storage support
 
 ---
 
 ## 👤 Author
 
-**Sacha Metzger**
-* **Focus:** High-Performance Python, Automation, Data Engineering.
-* **Background:** Competitive Programming (Top 3 France Algo).
+**Alvin Tubtub**
 
-*Open for freelance opportunities involving complex logic & optimization.*
+GitHub:
+https://github.com/AlvinTubtub
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
