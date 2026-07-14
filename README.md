@@ -1,5 +1,7 @@
 # 🚗 Car Data Pipeline
 
+[![Python Tests](https://github.com/AlvinTubtub/car-data-pipeline/actions/workflows/python-tests.yml/badge.svg)](https://github.com/AlvinTubtub/car-data-pipeline/actions/workflows/python-tests.yml)
+
 A high-performance Python ETL (Extract, Transform, Load) pipeline for generating, cleaning, validating, and visualizing used car listing datasets. This project demonstrates an end-to-end data engineering workflow by transforming raw vehicle listings into clean, analysis-ready datasets with an interactive Streamlit dashboard.
 
 ---
