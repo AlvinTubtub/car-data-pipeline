@@ -1,7 +1,7 @@
 import pytest
 import polars as pl
 from pathlib import Path
-from pipeline import (
+from src.pipeline import (
     normalize_pricing,
     normalize_mileage,
     generate_fingerprints,

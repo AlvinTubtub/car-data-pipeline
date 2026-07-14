@@ -4,7 +4,7 @@ import time
 import sys # Import for sys.stderr for logging
 
 # --- CONFIGURATION ---
-NUM_ROWS = 40_000 # 10k test dataset
+NUM_ROWS = 500_000 # 10k test dataset
 FILENAME = "dirty_car_listings.csv"
 
 # --- BASE DATA FOR GENERATION (Used Car Listings, Philippines) ---

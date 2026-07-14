@@ -120,20 +120,22 @@ def generate_fingerprints(lf: pl.LazyFrame, synonyms: Dict[str, str]) -> pl.Lazy
     ])
 
 def filter_anomalies(lf: pl.LazyFrame, config: PipelineConfig) -> pl.LazyFrame:
-    """Filters outliers based on group statistics and quality gates.
+    """Filters outliers based on robust group statistics and quality gates.
 
-    Applies both price gates (min price, group-relative max) and mileage
-    gates (missing/zero/out-of-range km values get dropped rather than
-    silently averaged away as nulls).
+    Uses the group median instead of the mean so extreme price outliers
+    do not inflate the threshold and escape filtering.
     """
     return (
         lf
         .with_columns([
-            pl.col("price_final").mean().over("fingerprint").alias("group_mean")
+            pl.col("price_final").median().over("fingerprint").alias("group_median")
         ])
         .filter(
             (pl.col("price_final") >= config.min_price) &
-            (pl.col("price_final") <= (pl.col("group_mean") * config.max_price_multiplier)) &
+            (
+                pl.col("price_final")
+                <= (pl.col("group_median") * config.max_price_multiplier)
+            ) &
             (pl.col("fingerprint").str.len_chars() > 1) &
             (pl.col("mileage_final").is_not_null()) &
             (pl.col("mileage_final") >= config.min_mileage) &
